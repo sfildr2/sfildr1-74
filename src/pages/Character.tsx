@@ -1,7 +1,8 @@
-import { Shield, User, Sword, Ring } from "lucide-react";
+import { Shield, User, Sword, Gem } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Equipment } from "@/types/equipment";
 
 const Character = () => {
   const character = {
@@ -28,7 +29,7 @@ const Character = () => {
         attributes: { str: 5 },
         element: "Fogo",
         description: "Uma espada forjada com escamas de dragão"
-      },
+      } as Equipment,
       secondaryWeapon: {
         name: "Escudo de Carvalho",
         type: "shield",
@@ -36,7 +37,7 @@ const Character = () => {
         defense: "+5",
         attributes: { res: 2 },
         description: "Um escudo resistente feito de carvalho ancestral"
-      },
+      } as Equipment,
       armor: {
         name: "Armadura de Placas",
         type: "armor",
@@ -44,7 +45,7 @@ const Character = () => {
         defense: "+10",
         attributes: { arm: 3 },
         description: "Uma armadura resistente feita de placas de aço"
-      },
+      } as Equipment,
       rings: [
         {
           name: "Anel da Sabedoria",
@@ -52,7 +53,7 @@ const Character = () => {
           rarity: "epic",
           attributes: { int: 3 },
           description: "Um anel que aumenta a sabedoria do usuário"
-        }
+        } as Equipment
       ]
     }
   };
@@ -70,7 +71,7 @@ const Character = () => {
     }
   };
 
-  const EquipmentSlot = ({ item, type }: { item: any, type: string }) => {
+  const EquipmentSlot = ({ item, type }: { item: Equipment | undefined, type: string }) => {
     if (!item) return (
       <div className="w-16 h-16 border-2 border-dashed border-amber-200/50 rounded-lg flex items-center justify-center bg-amber-50/30">
         <Tooltip>
@@ -78,7 +79,7 @@ const Character = () => {
             {type === 'weapon' ? <Sword className="w-8 h-8 text-amber-200/50" /> : 
              type === 'shield' ? <Shield className="w-8 h-8 text-amber-200/50" /> :
              type === 'armor' ? <User className="w-8 h-8 text-amber-200/50" /> :
-             <Ring className="w-8 h-8 text-amber-200/50" />}
+             <Gem className="w-8 h-8 text-amber-200/50" />}
           </TooltipTrigger>
           <TooltipContent>
             <p>Slot vazio para {type}</p>
@@ -94,7 +95,7 @@ const Character = () => {
             {type === 'weapon' ? <Sword className="w-full h-full text-amber-800" /> :
              type === 'shield' ? <Shield className="w-full h-full text-amber-800" /> :
              type === 'armor' ? <User className="w-full h-full text-amber-800" /> :
-             <Ring className="w-full h-full text-amber-800" />}
+             <Gem className="w-full h-full text-amber-800" />}
           </div>
         </HoverCardTrigger>
         <HoverCardContent className="w-80">
