@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 export interface EquipmentAttributes {
   str?: number;
   hab?: number;
@@ -17,4 +19,5 @@ export interface Equipment {
   attributes: EquipmentAttributes;
   element?: string;
   description: string;
+  icon: ReactNode;
 }
