@@ -91,6 +91,16 @@ const Character = () => {
     }
   ]);
 
+  const handleUseMp = (cost: number) => {
+    setCharacter(prev => ({
+      ...prev,
+      mp: {
+        ...prev.mp,
+        current: Math.max(0, prev.mp.current - cost)
+      }
+    }));
+  };
+
   const handleEquip = (item: Equipment) => {
     setCharacter(prev => {
       const newCharacter = { ...prev };
