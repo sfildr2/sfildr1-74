@@ -1,10 +1,19 @@
 import { useState } from "react";
-import { Shield, User, KeyRound } from "lucide-react";
+import { Shield, User, KeyRound, Sword, Users, Plus, Play } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { cn } from "@/lib/utils";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 const Index = () => {
   const [isLogin, setIsLogin] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -24,11 +33,79 @@ const Index = () => {
       return;
     }
 
+    setIsLoggedIn(true);
     toast({
       title: isLogin ? "Bem-vindo aventureiro!" : "Sua jornada começa agora!",
       description: isLogin ? "Login realizado com sucesso" : "Registro realizado com sucesso",
     });
   };
+
+  if (isLoggedIn) {
+    return (
+      <div className="min-h-screen p-6 space-y-8">
+        <header className="text-center">
+          <h1 className="text-4xl font-medieval text-amber-100 mb-2">Portal do Aventureiro</h1>
+          <p className="text-amber-200/60">Bem-vindo à sua jornada épica</p>
+        </header>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Seção de Aventuras como Jogador */}
+          <Card className="bg-black/20 border-amber-800/30">
+            <CardHeader>
+              <CardTitle className="font-medieval text-2xl text-amber-100 flex items-center gap-2">
+                <Users className="w-6 h-6" />
+                Suas Aventuras
+              </CardTitle>
+              <CardDescription className="text-amber-200/60">
+                Aventuras em que você participa como jogador
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="bg-black/30 rounded-lg p-4 border border-amber-800/30">
+                <p className="text-amber-100">Nenhuma aventura encontrada</p>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Seção de Aventuras como Mestre */}
+          <Card className="bg-black/20 border-amber-800/30">
+            <CardHeader>
+              <CardTitle className="font-medieval text-2xl text-amber-100 flex items-center gap-2">
+                <Sword className="w-6 h-6" />
+                Suas Campanhas
+              </CardTitle>
+              <CardDescription className="text-amber-200/60">
+                Aventuras em que você é o Mestre
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="bg-black/30 rounded-lg p-4 border border-amber-800/30">
+                <p className="text-amber-100">Nenhuma campanha encontrada</p>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Botões de Ação */}
+        <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
+          <Button
+            className="bg-amber-900/90 hover:bg-amber-800/90 text-amber-100 font-medieval flex items-center gap-2"
+            onClick={() => toast({ title: "Em breve!", description: "Funcionalidade em desenvolvimento" })}
+          >
+            <Plus className="w-5 h-5" />
+            Criar Nova Aventura
+          </Button>
+          <Button
+            className="bg-amber-900/90 hover:bg-amber-800/90 text-amber-100 font-medieval flex items-center gap-2"
+            onClick={() => toast({ title: "Em breve!", description: "Funcionalidade em desenvolvimento" })}
+          >
+            <Play className="w-5 h-5" />
+            Entrar em Aventura
+          </Button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-medieval-pattern flex items-center justify-center p-4">
