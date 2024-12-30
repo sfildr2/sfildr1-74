@@ -5,9 +5,11 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { Equipment } from "@/types/equipment";
 import CharacterImage from "@/components/character/CharacterImage";
 import DiceRoller from "@/components/character/DiceRoller";
+import SkillList from "@/components/character/SkillList";
+import { useState } from "react";
 
 const Character = () => {
-  const character = {
+  const [character, setCharacter] = useState({
     name: "Aventureiro",
     level: 1,
     attributes: {
@@ -61,6 +63,16 @@ const Character = () => {
         null
       ]
     }
+  });
+
+  const handleUseMp = (cost: number) => {
+    setCharacter(prev => ({
+      ...prev,
+      mp: {
+        ...prev.mp,
+        current: Math.max(0, prev.mp.current - cost)
+      }
+    }));
   };
 
   const getRarityBorder = (rarity: string) => {
@@ -225,9 +237,7 @@ const Character = () => {
               <CardTitle className="font-medieval text-xl text-amber-900">Skills</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-amber-800/60 text-center py-4">
-                Nenhuma skill desbloqueada ainda
-              </div>
+              <SkillList currentMp={character.mp.current} onUseMp={handleUseMp} />
             </CardContent>
           </Card>
         </div>
