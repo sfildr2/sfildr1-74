@@ -3,6 +3,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Equipment } from "@/types/equipment";
+import CharacterImage from "@/components/character/CharacterImage";
+import DiceRoller from "@/components/character/DiceRoller";
 
 const Character = () => {
   const character = {
@@ -53,7 +55,10 @@ const Character = () => {
           rarity: "epic",
           attributes: { int: 3 },
           description: "Um anel que aumenta a sabedoria do usuário"
-        } as Equipment
+        } as Equipment,
+        null,
+        null,
+        null
       ]
     }
   };
@@ -71,7 +76,7 @@ const Character = () => {
     }
   };
 
-  const EquipmentSlot = ({ item, type }: { item: Equipment | undefined, type: string }) => {
+  const EquipmentSlot = ({ item, type }: { item: Equipment | undefined | null, type: string }) => {
     if (!item) return (
       <div className="w-16 h-16 border-2 border-dashed border-amber-200/50 rounded-lg flex items-center justify-center bg-amber-50/30">
         <Tooltip>
@@ -130,6 +135,8 @@ const Character = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-6">
+          <CharacterImage name={character.name} />
+          
           <Card className="bg-white/80 border-amber-200/30">
             <CardHeader>
               <CardTitle className="font-medieval text-xl text-amber-900 flex items-center gap-2">
@@ -144,6 +151,31 @@ const Character = () => {
                   <div className="text-xl font-bold text-amber-800">{value}</div>
                 </div>
               ))}
+            </CardContent>
+          </Card>
+        </div>
+
+        <div className="space-y-6">
+          <Card className="bg-white/80 border-amber-200/30">
+            <CardHeader>
+              <CardTitle className="font-medieval text-xl text-amber-900">Equipamentos</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-4 gap-4 mb-6">
+                <EquipmentSlot item={character.equipment.primaryWeapon} type="weapon" />
+                <EquipmentSlot item={character.equipment.secondaryWeapon} type="shield" />
+                <EquipmentSlot item={character.equipment.armor} type="armor" />
+                <EquipmentSlot item={character.equipment.rings[0]} type="ring" />
+              </div>
+              <div className="grid grid-cols-3 gap-4 mb-6">
+                <EquipmentSlot item={character.equipment.rings[1]} type="ring" />
+                <EquipmentSlot item={character.equipment.rings[2]} type="ring" />
+                <EquipmentSlot item={character.equipment.rings[3]} type="ring" />
+              </div>
+              <div className="text-right text-amber-900 font-medieval">
+                <span className="text-sm">Gold:</span>
+                <span className="ml-2 text-lg">{character.gold}</span>
+              </div>
             </CardContent>
           </Card>
 
@@ -178,24 +210,13 @@ const Character = () => {
               </div>
             </CardContent>
           </Card>
-        </div>
 
-        <div className="space-y-6">
           <Card className="bg-white/80 border-amber-200/30">
             <CardHeader>
-              <CardTitle className="font-medieval text-xl text-amber-900">Equipamentos</CardTitle>
+              <CardTitle className="font-medieval text-xl text-amber-900">Ações</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="grid grid-cols-4 gap-4 mb-6">
-                <EquipmentSlot item={character.equipment.primaryWeapon} type="weapon" />
-                <EquipmentSlot item={character.equipment.secondaryWeapon} type="shield" />
-                <EquipmentSlot item={character.equipment.armor} type="armor" />
-                <EquipmentSlot item={character.equipment.rings[0]} type="ring" />
-              </div>
-              <div className="text-right text-amber-900 font-medieval">
-                <span className="text-sm">Gold:</span>
-                <span className="ml-2 text-lg">{character.gold}</span>
-              </div>
+              <DiceRoller />
             </CardContent>
           </Card>
 
