@@ -10,9 +10,14 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
-const Index = () => {
-  const [isLogin, setIsLogin] = useState(true);
+interface IndexProps {
+  isRegister?: boolean;
+}
+
+const Index = ({ isRegister = false }: IndexProps) => {
+  const [isLogin, setIsLogin] = useState(!isRegister);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [formData, setFormData] = useState({
     username: "",
@@ -20,6 +25,7 @@ const Index = () => {
     confirmPassword: "",
   });
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -38,6 +44,7 @@ const Index = () => {
       title: isLogin ? "Bem-vindo aventureiro!" : "Sua jornada começa agora!",
       description: isLogin ? "Login realizado com sucesso" : "Registro realizado com sucesso",
     });
+    navigate("/");
   };
 
   if (isLoggedIn) {
@@ -177,7 +184,10 @@ const Index = () => {
           <p className="mt-6 text-center text-amber-200/80 text-sm">
             {isLogin ? "Não possui uma conta?" : "Já possui uma conta?"}
             <button
-              onClick={() => setIsLogin(!isLogin)}
+              onClick={() => {
+                setIsLogin(!isLogin);
+                navigate(isLogin ? "/register" : "/login");
+              }}
               className="ml-2 text-amber-400 hover:text-amber-300 transition-colors duration-200 font-medieval"
             >
               {isLogin ? "Registre-se" : "Entre"}
