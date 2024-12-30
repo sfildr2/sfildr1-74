@@ -9,14 +9,16 @@ import CharacterImage from "@/components/character/CharacterImage";
 import DiceRoller from "@/components/character/DiceRoller";
 import SkillList from "@/components/character/SkillList";
 import Inventory from "@/components/character/Inventory";
+import EquipmentSlot from "@/components/character/EquipmentSlot";
 import { useToast } from "@/components/ui/use-toast";
 import { Equipment } from "@/types/equipment";
+import { Character } from "@/types/character";
 
 const Character = () => {
     const { id } = useParams();
     const { toast } = useToast();
 
-    const { data: character, isLoading: isLoadingCharacter } = useQuery({
+    const { data: character, isLoading: isLoadingCharacter } = useQuery<Character>({
         queryKey: ['character', id],
         queryFn: () => characterService.getCharacter(id!),
         enabled: !!id
@@ -72,7 +74,6 @@ const Character = () => {
         const newCharacter = { ...character };
         const equipment = { ...newCharacter.equipment };
 
-        // If it's a ring, handle multiple ring slots
         if (item.type === 'ring') {
             const emptyRingSlot = equipment.rings.findIndex(ring => ring === null);
             if (emptyRingSlot !== -1) {
@@ -92,14 +93,12 @@ const Character = () => {
                 return;
             }
         } else {
-            // Handle other equipment types
             const slot = item.type === 'weapon' ? 'primaryWeapon' :
                         item.type === 'shield' ? 'secondaryWeapon' :
                         'armor';
             
             const currentItem = equipment[slot];
             if (currentItem) {
-                // Add current item back to inventory
                 updateInventoryMutation.mutate({ inventoryId: currentItem.$id, item: currentItem });
             }
             
@@ -111,7 +110,6 @@ const Character = () => {
         }
 
         newCharacter.equipment = equipment;
-        // Update character state with new equipment
     };
 
     const handleUnequip = (item: Equipment, slotIndex?: number) => {
@@ -131,7 +129,6 @@ const Character = () => {
         }
 
         newCharacter.equipment = equipment;
-        // Update character state with unequipped item
         toast({
             title: "Item desequipado",
             description: `${item.name} foi desequipado com sucesso!`
@@ -182,15 +179,15 @@ const Character = () => {
                         </CardHeader>
                         <CardContent>
                             <div className="grid grid-cols-4 gap-4 mb-6">
-                                <EquipmentSlot item={character.equipment.primaryWeapon} type="weapon" />
-                                <EquipmentSlot item={character.equipment.secondaryWeapon} type="shield" />
-                                <EquipmentSlot item={character.equipment.armor} type="armor" />
-                                <EquipmentSlot item={character.equipment.rings[0]} type="ring" slotIndex={0} />
+                                <EquipmentSlot item={character.equipment.primaryWeapon} type="weapon" onUnequip={handleUnequip} />
+                                <EquipmentSlot item={character.equipment.secondaryWeapon} type="shield" onUnequip={handleUnequip} />
+                                <EquipmentSlot item={character.equipment.armor} type="armor" onUnequip={handleUnequip} />
+                                <EquipmentSlot item={character.equipment.rings[0]} type="ring" slotIndex={0} onUnequip={handleUnequip} />
                             </div>
                             <div className="grid grid-cols-3 gap-4 mb-6">
-                                <EquipmentSlot item={character.equipment.rings[1]} type="ring" slotIndex={1} />
-                                <EquipmentSlot item={character.equipment.rings[2]} type="ring" slotIndex={2} />
-                                <EquipmentSlot item={character.equipment.rings[3]} type="ring" slotIndex={3} />
+                                <EquipmentSlot item={character.equipment.rings[1]} type="ring" slotIndex={1} onUnequip={handleUnequip} />
+                                <EquipmentSlot item={character.equipment.rings[2]} type="ring" slotIndex={2} onUnequip={handleUnequip} />
+                                <EquipmentSlot item={character.equipment.rings[3]} type="ring" slotIndex={3} onUnequip={handleUnequip} />
                             </div>
                             <div className="text-right text-amber-900 font-medieval">
                                 <span className="text-sm">Gold:</span>
@@ -207,24 +204,24 @@ const Character = () => {
                             <div>
                                 <div className="flex justify-between text-amber-900 mb-1">
                                     <span>HP</span>
-                                    <span>{character.hp.current}/{character.hp.max}</span>
+                                    <span>{character.status.hp.current}/{character.status.hp.max}</span>
                                 </div>
                                 <div className="w-full bg-amber-100 rounded-full h-2.5">
                                     <div 
                                         className="bg-red-500 h-2.5 rounded-full"
-                                        style={{ width: `${(character.hp.current / character.hp.max) * 100}%` }}
+                                        style={{ width: `${(character.status.hp.current / character.status.hp.max) * 100}%` }}
                                     ></div>
                                 </div>
                             </div>
                             <div>
                                 <div className="flex justify-between text-amber-900 mb-1">
                                     <span>MP</span>
-                                    <span>{character.mp.current}/{character.mp.max}</span>
+                                    <span>{character.status.mp.current}/{character.status.mp.max}</span>
                                 </div>
                                 <div className="w-full bg-amber-100 rounded-full h-2.5">
                                     <div 
                                         className="bg-blue-500 h-2.5 rounded-full"
-                                        style={{ width: `${(character.mp.current / character.mp.max) * 100}%` }}
+                                        style={{ width: `${(character.status.mp.current / character.status.mp.max) * 100}%` }}
                                     ></div>
                                 </div>
                             </div>
@@ -245,7 +242,7 @@ const Character = () => {
                             <CardTitle className="font-medieval text-xl text-amber-900">Skills</CardTitle>
                         </CardHeader>
                         <CardContent>
-                            <SkillList currentMp={character.mp.current} onUseMp={handleUseMp} />
+                            <SkillList currentMp={character.status.mp.current} onUseMp={handleUseMp} />
                         </CardContent>
                     </Card>
 

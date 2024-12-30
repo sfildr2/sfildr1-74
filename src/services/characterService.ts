@@ -1,8 +1,9 @@
 import { databases, storage, appwriteConfig } from '@/lib/appwrite';
 import { ID, Query } from 'appwrite';
+import { Character } from '@/types/character';
 
 export const characterService = {
-    async getCharacter(id: string) {
+    async getCharacter(id: string): Promise<Character> {
         try {
             const character = await databases.getDocument(
                 appwriteConfig.databaseId,
@@ -33,7 +34,7 @@ export const characterService = {
                 attributes,
                 status,
                 inventory: inventory.documents
-            };
+            } as Character;
         } catch (error) {
             console.error('Error fetching character:', error);
             throw error;
