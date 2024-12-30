@@ -1,9 +1,22 @@
 import { Users, Sword, Plus, Play } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
   const { toast } = useToast();
+  const navigate = useNavigate();
+
+  const campaigns = [
+    {
+      id: 1,
+      name: "A Lenda do Dragão Dourado",
+      character: {
+        id: 1,
+        name: "Aventureiro"
+      }
+    }
+  ];
 
   return (
     <div className="min-h-screen p-6 space-y-8">
@@ -41,9 +54,22 @@ const Dashboard = () => {
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="bg-amber-50/50 rounded-lg p-4 border border-amber-200/30">
-              <p className="text-amber-900">Nenhuma campanha encontrada</p>
-            </div>
+            {campaigns.length > 0 ? (
+              campaigns.map(campaign => (
+                <div 
+                  key={campaign.id}
+                  onClick={() => navigate(`/character/${campaign.character.id}`)}
+                  className="bg-amber-50/50 rounded-lg p-4 border border-amber-200/30 cursor-pointer hover:bg-amber-100/50 transition-colors"
+                >
+                  <h3 className="font-medieval text-lg text-amber-900">{campaign.name}</h3>
+                  <p className="text-amber-800/60">Personagem: {campaign.character.name}</p>
+                </div>
+              ))
+            ) : (
+              <div className="bg-amber-50/50 rounded-lg p-4 border border-amber-200/30">
+                <p className="text-amber-900">Nenhuma campanha encontrada</p>
+              </div>
+            )}
           </CardContent>
         </Card>
       </div>
