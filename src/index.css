@@ -6,33 +6,33 @@
 
 @layer base {
   :root {
-    --background: 39 16% 5%;
-    --foreground: 39 16% 95%;
+    --background: 39 16% 98%;
+    --foreground: 39 16% 15%;
 
-    --card: 39 16% 5%;
-    --card-foreground: 39 16% 95%;
+    --card: 39 16% 98%;
+    --card-foreground: 39 16% 15%;
 
-    --popover: 39 16% 5%;
-    --popover-foreground: 39 16% 95%;
+    --popover: 39 16% 98%;
+    --popover-foreground: 39 16% 15%;
 
-    --primary: 39 84% 32%;
-    --primary-foreground: 39 16% 95%;
+    --primary: 39 84% 65%;
+    --primary-foreground: 39 16% 15%;
 
-    --secondary: 39 16% 20%;
-    --secondary-foreground: 39 16% 95%;
+    --secondary: 39 16% 90%;
+    --secondary-foreground: 39 16% 15%;
 
-    --muted: 39 16% 20%;
-    --muted-foreground: 39 16% 65%;
+    --muted: 39 16% 90%;
+    --muted-foreground: 39 16% 45%;
 
-    --accent: 39 16% 20%;
-    --accent-foreground: 39 16% 95%;
+    --accent: 39 16% 90%;
+    --accent-foreground: 39 16% 15%;
 
-    --destructive: 0 84% 32%;
-    --destructive-foreground: 39 16% 95%;
+    --destructive: 0 84% 65%;
+    --destructive-foreground: 39 16% 15%;
 
-    --border: 39 16% 20%;
-    --input: 39 16% 20%;
-    --ring: 39 84% 32%;
+    --border: 39 16% 85%;
+    --input: 39 16% 85%;
+    --ring: 39 84% 65%;
 
     --radius: 0.5rem;
   }
@@ -43,7 +43,7 @@
     @apply border-border;
   }
   body {
-    @apply bg-[#1a1006] text-foreground;
-    background-image: radial-gradient(circle at center, rgba(66, 40, 14, 0.2) 0%, rgba(26, 16, 6, 0.9) 100%);
+    @apply bg-[#f8f5f0] text-foreground;
+    background-image: radial-gradient(circle at center, rgba(255, 248, 240, 0.8) 0%, rgba(248, 245, 240, 0.95) 100%);
   }
 }

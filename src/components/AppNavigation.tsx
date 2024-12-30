@@ -13,19 +13,19 @@ const AppNavigation = () => {
     <NavigationMenu className="fixed top-4 right-4">
       <NavigationMenuList>
         <NavigationMenuItem>
-          <Link to="/" className={navigationMenuTriggerStyle()}>
+          <Link to="/" className={navigationMenuTriggerStyle() + " bg-amber-100 text-amber-900 hover:bg-amber-200 hover:text-amber-900"}>
             <BookOpen className="mr-2 h-4 w-4" />
             Portal do Aventureiro
           </Link>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <Link to="/login" className={navigationMenuTriggerStyle()}>
+          <Link to="/login" className={navigationMenuTriggerStyle() + " bg-amber-100 text-amber-900 hover:bg-amber-200 hover:text-amber-900"}>
             <LogIn className="mr-2 h-4 w-4" />
             Login
           </Link>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <Link to="/register" className={navigationMenuTriggerStyle()}>
+          <Link to="/register" className={navigationMenuTriggerStyle() + " bg-amber-100 text-amber-900 hover:bg-amber-200 hover:text-amber-900"}>
             <Users className="mr-2 h-4 w-4" />
             Registro
           </Link>
