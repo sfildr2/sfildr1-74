@@ -1,6 +1,6 @@
 import { Equipment } from "@/types/equipment";
 import { Card } from "@/components/ui/card";
-import { Shield, Sword, Ring, ShieldQuestion } from "lucide-react";
+import { Shield, Sword, CircleIcon, ShieldQuestion } from "lucide-react";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
 
 interface EquipmentSlotProps {
@@ -18,7 +18,7 @@ const EquipmentSlot = ({ item, type, slotIndex, onUnequip }: EquipmentSlotProps)
       case 'shield':
         return <Shield className="w-8 h-8 text-amber-200/50" />;
       case 'ring':
-        return <Ring className="w-8 h-8 text-amber-200/50" />;
+        return <CircleIcon className="w-8 h-8 text-amber-200/50" />;
       default:
         return <ShieldQuestion className="w-8 h-8 text-amber-200/50" />;
     }

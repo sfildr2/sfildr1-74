@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import { Models } from 'appwrite';
 
 export interface EquipmentAttributes {
   str?: number;
@@ -10,7 +11,7 @@ export interface EquipmentAttributes {
   ten?: number;
 }
 
-export interface Equipment {
+export interface Equipment extends Models.Document {
   name: string;
   type: 'weapon' | 'shield' | 'armor' | 'ring';
   rarity: 'common' | 'rare' | 'epic' | 'legendary';
